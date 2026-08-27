@@ -6,12 +6,16 @@ import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
 import config from "@/config";
 
 export const GET: APIRoute = async context => {
+  if (!config.features.dynamicOgImage) {
+    return new Response(null, { status: 404, statusText: "Not found" });
+  }
+
   const fonts = fontData["--font-google-sans-code"];
   const regularFontPath = getFontPathByWeight(fonts, 400);
   const boldFontPath = getFontPathByWeight(fonts, 700);
 
   if (regularFontPath === undefined || boldFontPath === undefined) {
-    throw new Error("Cannot find the font path.");
+    return new Response(null, { status: 404, statusText: "Font not found" });
   }
 
   const [regularData, boldData] = await Promise.all([
