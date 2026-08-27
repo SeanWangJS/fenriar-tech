@@ -88,6 +88,46 @@ const rssHref = getRelativeLocaleUrl(
       )
     }
 
+    <!-- Google Analytics (GA4) -->
+    {
+      site.googleAnalyticsId && (
+        <>
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${site.googleAnalyticsId}`}
+          />
+          <script is:inline define:vars={{ gaId: site.googleAnalyticsId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId, { send_page_view: false });
+
+            document.addEventListener("astro:page-load", () => {
+              gtag("event", "page_view", {
+                page_location: window.location.href,
+                page_title: document.title,
+              });
+            });
+          </script>
+        </>
+      )
+    }
+
+    <!-- Google AdSense -->
+    {
+      site.googleAdsenseId && (
+        <script
+          is:inline
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${site.googleAdsenseId}`}
+          crossorigin="anonymous"
+        />
+      )
+    }
+
     <!--
       Inline FOUC-prevention script: sets data-theme on <html> before
       the browser paints. Runs synchronously, no defer/async.
