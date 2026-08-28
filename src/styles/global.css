@@ -52,3 +52,27 @@ html {
     background-color: transparent;
   }
 }
+
+.target-jump-highlight {
+  animation: jump-pulse 2s cubic-bezier(0, 0, 0.2, 1) !important;
+}
+
+@keyframes jump-pulse {
+  0% {
+    box-shadow: 0 0 0 4px var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    border-radius: 4px;
+  }
+  40% {
+    box-shadow: 0 0 0 4px var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    border-radius: 4px;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    background-color: transparent;
+    color: inherit;
+  }
+}

@@ -147,7 +147,7 @@ $$
 
 ## References
 
-<ol class="list-decimal pl-6 space-y-2">
+<ul class="list-none pl-0 space-y-3">
   <li id="ref-1">
     D. B. Kirk and W. W. Hwu, <em>Programming Massively Parallel Processors: A Hands-on Approach (PMPP)</em>, 4th ed., Section 4.4 on SIMD/SIMT Hardware.
   </li>
@@ -163,4 +163,4 @@ $$
   <li id="ref-5">
     NVIDIA Corporation, <a href="https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf" target="_blank" rel="noopener noreferrer">NVIDIA A100 Tensor Core GPU Architecture Whitepaper</a>.
   </li>
-</ol>
+</ul>
