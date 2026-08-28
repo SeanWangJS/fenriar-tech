@@ -593,7 +593,7 @@ const ogImage = ogImageUrl
       const header = document.createElement("div");
       header.className =
         "mb-1.5 font-semibold text-accent flex items-center justify-between border-b border-border pb-1";
-      header.innerHTML = `<span>📚 Reference [${targetId.replace("ref-", "")}]</span><span class="text-[10px] text-muted-foreground">Hover Preview</span>`;
+      header.innerHTML = `<span>Reference [${targetId.replace("ref-", "")}]</span><span class="text-[10px] text-muted-foreground">Preview</span>`;
 
       const body = document.createElement("div");
       body.className = "text-muted-foreground mt-1";
@@ -657,7 +657,7 @@ const ogImage = ogImageUrl
     document.addEventListener("click", e => {
       if (
         !e.target.closest(".citation-dropdown") &&
-        !e.target.closest(".ref-badge")
+        !e.target.closest(".ref-link")
       ) {
         closeActiveDropdown();
       }
@@ -672,19 +672,19 @@ const ogImage = ogImageUrl
       if (!targetEl) return;
 
       const numLabel = targetId.replace("ref-", "");
-      const badge = document.createElement("button");
-      badge.type = "button";
-      badge.className =
-        "ref-badge inline-flex items-center gap-1 font-mono font-bold text-accent bg-accent/10 hover:bg-accent hover:text-background px-2 py-0.5 rounded cursor-pointer transition-all mr-2 border border-accent/40 text-xs shadow-sm";
-      badge.title =
+      const link = document.createElement("a");
+      link.href = `#${occurrences[0].id}`;
+      link.className =
+        "ref-link font-mono font-semibold text-accent hover:underline cursor-pointer mr-2 select-none inline-block";
+      link.title =
         occurrences.length > 1
-          ? `Click to view ${occurrences.length} citation locations in text`
-          : "Click to jump back to text location";
-      badge.innerHTML = `<span>[${numLabel}]</span> <span class="text-[10px] opacity-80">↩${occurrences.length > 1 ? ` (${occurrences.length})` : ""}</span>`;
+          ? `Cited in ${occurrences.length} places. Click to select location.`
+          : "Click to jump back to citation.";
+      link.innerText = `[${numLabel}]`;
 
-      targetEl.prepend(badge);
+      targetEl.prepend(link);
 
-      badge.addEventListener("click", e => {
+      link.addEventListener("click", e => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -714,23 +714,23 @@ const ogImage = ogImageUrl
         const dropdown = document.createElement("div");
         dropdown.dataset.targetId = targetId;
         dropdown.className =
-          "citation-dropdown fixed z-50 min-w-[300px] max-w-sm rounded-xl border border-border bg-background/95 p-2.5 shadow-2xl backdrop-blur-md text-xs transition-all animate-in fade-in zoom-in-95";
+          "citation-dropdown fixed z-50 min-w-[280px] max-w-sm rounded-xl border border-border bg-background/95 p-2.5 shadow-2xl backdrop-blur-md text-xs transition-all animate-in fade-in zoom-in-95";
 
         const dropdownTitle = document.createElement("div");
         dropdownTitle.className =
           "px-2 py-1.5 font-semibold text-accent border-b border-border flex items-center justify-between";
-        dropdownTitle.innerHTML = `<span>📍 Cited in ${occurrences.length} places</span><span class="text-[10px] text-muted-foreground">Select to jump</span>`;
+        dropdownTitle.innerHTML = `<span>Cited in ${occurrences.length} places</span><span class="text-[10px] text-muted-foreground">Select to jump</span>`;
         dropdown.appendChild(dropdownTitle);
 
         const list = document.createElement("ul");
-        list.className = "mt-1.5 space-y-1.5";
+        list.className = "mt-1.5 space-y-1";
 
         occurrences.forEach((occ, i) => {
           const item = document.createElement("li");
           const btn = document.createElement("button");
           btn.type = "button";
           btn.className =
-            "w-full text-left px-2.5 py-2 rounded-lg hover:bg-accent/15 hover:text-accent flex items-start gap-2.5 transition-colors cursor-pointer group border border-transparent hover:border-accent/30";
+            "w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-accent/15 hover:text-accent flex items-start gap-2 transition-colors cursor-pointer group border border-transparent hover:border-accent/30";
           btn.innerHTML = `
             <span class="font-mono text-accent font-bold mt-0.5 text-[11px] bg-accent/10 group-hover:bg-accent group-hover:text-background px-1.5 py-0.5 rounded transition-colors">#${i + 1}</span>
             <span class="flex-1 line-clamp-2 text-foreground group-hover:text-accent font-medium leading-snug">${occ.context}</span>
@@ -758,14 +758,14 @@ const ogImage = ogImageUrl
         document.body.appendChild(dropdown);
         activeDropdown = dropdown;
 
-        // Position dropdown relative to badge
-        const badgeRect = badge.getBoundingClientRect();
+        // Position dropdown relative to link
+        const linkRect = link.getBoundingClientRect();
         const dropRect = dropdown.getBoundingClientRect();
-        let dropTop = badgeRect.bottom + 6;
-        let dropLeft = badgeRect.left;
+        let dropTop = linkRect.bottom + 6;
+        let dropLeft = linkRect.left;
 
         if (dropTop + dropRect.height > window.innerHeight - 10) {
-          dropTop = badgeRect.top - dropRect.height - 6;
+          dropTop = linkRect.top - dropRect.height - 6;
         }
         if (dropLeft + dropRect.width > window.innerWidth - 10) {
           dropLeft = window.innerWidth - dropRect.width - 10;
