@@ -2,7 +2,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://fenriar-tech.pages.dev/",
+    url: "https://fenriartech.com/",
     title: "Fenriar Tech",
     description: "Personal tech blog on LLM, CUDA, Systems & Algorithms.",
     author: "SeanWang",
