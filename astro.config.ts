@@ -9,6 +9,8 @@ import sitemap from "@astrojs/sitemap";
 import { unified } from "@astrojs/markdown-remark";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import rehypeCallouts from "rehype-callouts";
 import {
   transformerNotationDiff,
@@ -41,10 +43,11 @@ export default defineConfig({
   markdown: {
     processor: unified({
       remarkPlugins: [
+        remarkMath,
         remarkToc,
         [remarkCollapse, { test: "Table of contents" }],
       ],
-      rehypePlugins: [rehypeCallouts],
+      rehypePlugins: [rehypeKatex, rehypeCallouts],
     }),
     shikiConfig: {
       themes: { light: "min-light", dark: "night-owl" },
