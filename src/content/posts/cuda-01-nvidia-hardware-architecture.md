@@ -22,7 +22,7 @@ CUDA is a parallel computing platform and programming model built directly on to
 The classical **Von Neumann architecture** forms the bedrock of modern computing systems. It comprises five fundamental components: the Arithmetic Logic Unit (ALU), the Control Unit, Memory, Input devices, and Output devices. The ALU and Control Unit together constitute the Central Processing Unit (CPU). Memory encompasses primary storage (RAM) and secondary storage (disk/SSD), while input/output units form peripherals. Data moves between the CPU, memory, and peripherals across system buses.
 
 ![Figure 1.1: Classical Von Neumann CPU Architecture](/assets/posts/cuda-01-nvidia-hardware-architecture/01_von_cpu.png)
-*Figure 1.1: Classical Von Neumann CPU Architecture [1]*
+*Figure 1.1: Classical Von Neumann CPU Architecture [[1]](#ref-1)*
 
 Over decades of rapid evolution, these basic units have grown immensely powerful and sophisticated. Modern CPUs operate at clock frequencies exceeding several gigahertz and house dozens of physical cores. Memory systems have evolved into deep, multi-tiered hierarchies comprising L1, L2, and L3 caches, main memory, and NVMe storage.
 
@@ -31,7 +31,7 @@ However, as Dennard scaling collapsed and Moore's Law slowed down, scaling CPU p
 This paradigm shift catalyzed the emergence of General-Purpose GPU computing (**GPGPU**). Structurally, GPUs extend the Von Neumann model by replicating the compute units (ALUs) at an unprecedented scale:
 
 ![Figure 1.2: GPU-Enhanced Von Neumann Architecture with Many Compute Units](/assets/posts/cuda-01-nvidia-hardware-architecture/01_von_gpu.png)
-*Figure 1.2: GPU-Enhanced Von Neumann Architecture [1]*
+*Figure 1.2: GPU-Enhanced Von Neumann Architecture [[1]](#ref-1)*
 
 Under this architecture, a single control unit orchestrates multiple execution/arithmetic units simultaneously. A single instruction is broadcast and executed across numerous execution units in parallel. This execution model is known as **SIMT (Single Instruction, Multiple Threads)**, which is NVIDIA's hardware-managed mechanism for implementing the broader **SIMD (Single Instruction, Multiple Data)** computing concept.
 
@@ -62,7 +62,7 @@ Looking inside an individual SM, it is partitioned into four autonomous **Proces
 In each A100 SM, there are **64 FP32 cores, 64 INT32 cores, 32 FP64 cores, and 4 third-generation Tensor Cores**.
 
 ![Figure 1.3: NVIDIA GA100 Streaming Multiprocessor (SM) Architecture](/assets/posts/cuda-01-nvidia-hardware-architecture/01_a100_sm.png)
-*Figure 1.3: NVIDIA GA100 Streaming Multiprocessor (SM) Architecture [2]*
+*Figure 1.3: NVIDIA GA100 Streaming Multiprocessor (SM) Architecture [[2]](#ref-2)*
 
 ---
 
@@ -76,7 +76,7 @@ NVIDIA GPU memory architecture is structured into a multi-level hierarchy design
 4. **Device Memory (VRAM / Global Memory)**: Off-chip High Bandwidth Memory (HBM2/HBM2e/HBM3) or GDDR6 memory, offering large capacity (e.g., 40 GB / 80 GB) but higher access latency.
 
 ![Figure 1.4: Simplified GPU Memory Hierarchy](/assets/posts/cuda-01-nvidia-hardware-architecture/01_memory_hierachy.png)
-*Figure 1.4: Simplified GPU Memory Hierarchy [3]*
+*Figure 1.4: Simplified GPU Memory Hierarchy [[3]](#ref-3)*
 
 ---
 
@@ -86,7 +86,7 @@ NVIDIA GPU memory architecture is structured into a multi-level hierarchy design
 
 Because kernel execution involves memory latency and compute instruction dependencies, a real-world CUDA kernel rarely saturates 100% of theoretical peak bandwidth. Measuring and understanding theoretical bandwidth serves as a critical baseline for **Roofline Modeling** and evaluating whether a workload is *memory-bound* or *compute-bound*.
 
-The theoretical peak memory bandwidth is computed as [4]:
+The theoretical peak memory bandwidth is computed as [[4]](#ref-4):
 
 $$
 \text{Bandwidth} = 2 \times \text{MemClockRate} \times \left(\frac{\text{BusWidth}}{8}\right)
@@ -106,7 +106,7 @@ $$
 \end{aligned}
 $$
 
-This calculated throughput matches the official specifications published in NVIDIA's hardware whitepaper [5].
+This calculated throughput matches the official specifications published in NVIDIA's hardware whitepaper [[5]](#ref-5).
 
 ---
 
@@ -147,8 +147,20 @@ $$
 
 ## References
 
-1. D. B. Kirk and W. W. Hwu, *Programming Massively Parallel Processors: A Hands-on Approach (PMPP)*, 4th ed., Section 4.4 on SIMD/SIMT Hardware.
-2. NVIDIA Corporation, [NVIDIA Ampere Architecture In-Depth](https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/), NVIDIA Technical Blog.
-3. Supercomputing Blog, [CUDA Memory and Cache Architecture](http://supercomputingblog.com/cuda/cuda-memory-and-cache-architecture/).
-4. NVIDIA Corporation, [How to Implement Performance Metrics in CUDA C/C++](https://developer.nvidia.com/blog/how-implement-performance-metrics-cuda-cc/), NVIDIA Technical Blog.
-5. NVIDIA Corporation, [NVIDIA A100 Tensor Core GPU Architecture Whitepaper](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf).
+<ol class="list-decimal pl-6 space-y-2">
+  <li id="ref-1">
+    D. B. Kirk and W. W. Hwu, <em>Programming Massively Parallel Processors: A Hands-on Approach (PMPP)</em>, 4th ed., Section 4.4 on SIMD/SIMT Hardware.
+  </li>
+  <li id="ref-2">
+    NVIDIA Corporation, <a href="https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/" target="_blank" rel="noopener noreferrer">NVIDIA Ampere Architecture In-Depth</a>, NVIDIA Technical Blog.
+  </li>
+  <li id="ref-3">
+    Supercomputing Blog, <a href="http://supercomputingblog.com/cuda/cuda-memory-and-cache-architecture/" target="_blank" rel="noopener noreferrer">CUDA Memory and Cache Architecture</a>.
+  </li>
+  <li id="ref-4">
+    NVIDIA Corporation, <a href="https://developer.nvidia.com/blog/how-implement-performance-metrics-cuda-cc/" target="_blank" rel="noopener noreferrer">How to Implement Performance Metrics in CUDA C/C++</a>, NVIDIA Technical Blog.
+  </li>
+  <li id="ref-5">
+    NVIDIA Corporation, <a href="https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf" target="_blank" rel="noopener noreferrer">NVIDIA A100 Tensor Core GPU Architecture Whitepaper</a>.
+  </li>
+</ol>

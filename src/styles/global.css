@@ -34,6 +34,21 @@
   @apply underline decoration-wavy decoration-2 underline-offset-8;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :target {
-  scroll-margin-block: 1rem;
+  scroll-margin-block: 2rem;
+  animation: target-highlight 1.5s ease-out;
+}
+
+@keyframes target-highlight {
+  0% {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+  }
+  100% {
+    background-color: transparent;
+  }
 }
