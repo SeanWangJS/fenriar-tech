@@ -39,7 +39,7 @@ Under this architecture, a single control unit orchestrates multiple execution/a
 > 
 > The parallel design of GPUs operates on a fundamentally different plane than CPU multi-threading. A multi-core CPU features a small number of heavyweight, independent physical cores executing complex out-of-order execution pipelines. While CPUs also support SIMD (via vector instruction sets like SSE, AVX-512, and ARM Neon), they rely on wide vector registers (e.g., 256-bit or 512-bit registers) within a single thread context. 
 >
-> In contrast, a GPU devotes the vast majority of its silicon area directly to raw ALUs rather than large caches and branch predictors, allowing thousands of lightweight threads to run concurrently in hardware.
+> In contrast, a GPU devotes the vast majority of its silicon area directly to raw ALUs rather than large caches and branch predictors, allowing thousands of lightweight threads to run concurrently in hardware, organized and scheduled in lockstep units of 32 threads known as warps.
 
 ---
 
@@ -47,7 +47,7 @@ Under this architecture, a single control unit orchestrates multiple execution/a
 
 The **Streaming Multiprocessor (SM)** is the core computational building block of an NVIDIA GPU. Analogous to an independent CPU core (but massively wider), a modern GPU integrates dozens to over a hundred SMs. 
 
-> 🔍 **Note on Physical Die vs. Commercial Product Configuration**:
+> **Note on Physical Die vs. Commercial Product Configuration**:
 > The full GA100 physical silicon die (Ampere architecture) contains **128 SMs**. However, to maximize manufacturing yield (harvesting partially defective dies), the commercial **NVIDIA A100 GPU** enables **108 SMs** (or 56 SMs on A30). In the earlier Volta architecture, the GV100 physical die houses 84 SMs, with commercial V100 enabling 80 SMs.
 
 Looking inside an individual SM, it is partitioned into four autonomous **Processing Blocks** (sub-cores). Each processing block operates as an independent SIMT execution unit:
@@ -140,8 +140,16 @@ $$
 \end{aligned}
 $$
 
-> 💡 **CUDA Core vs. Tensor Core Compute**:
+> **CUDA Core vs. Tensor Core Compute**:
 > The $19.5\text{ TFLOPS}$ figure represents non-Tensor Core vector FP32 compute. When Tensor Cores are engaged (for matrix multiplications in deep learning), the A100 achieves **$156\text{ TFLOPS}$** in TensorFloat-32 (TF32) dense mode, and up to **$312\text{ TFLOPS}$** in FP16 dense mode, demonstrating the immense throughput advantage of dedicated matrix units.
+
+---
+
+## 6. Summary
+
+Through this dual perspective of compute and memory, we arrive at two fundamental physical boundaries: peak memory bandwidth and peak compute throughput. Together, these two metrics establish the foundation of the Roofline Model, which helps determine whether a kernel is memory-bound or compute-bound.
+
+In the next article, we will examine the CUDA programming model and see how software threads, blocks, and grids map onto these underlying hardware structures.
 
 ---
 
