@@ -11,7 +11,7 @@ tags:
   - hardware
 ---
 
-> 💡 **Editor's Note**: *This article is an English adaptation and technical revision of the original post published on [SeanWangJS.github.io](https://seanwangjs.github.io/).*
+> **Note**: *This article is an English adaptation and technical revision of the original post published on [SeanWangJS.github.io](https://seanwangjs.github.io/).*
 
 CUDA is a parallel computing platform and programming model built directly on top of NVIDIA's GPU hardware architecture. Just as writing high-performance CPU software requires a solid grasp of CPU microarchitecture (caches, pipelines, SIMD extensions), writing efficient CUDA programs demands a foundational understanding of how GPUs are physically structured and how they execute workloads.
 
