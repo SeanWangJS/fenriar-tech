@@ -3,7 +3,7 @@ title: "CUDA Programming (1): An Introduction to NVIDIA GPU Hardware Architectur
 pubDatetime: 2026-08-28T10:00:00+08:00
 description: "A foundational guide to NVIDIA GPU hardware architecture, covering SIMT execution model, Streaming Multiprocessors (SMs), unified memory hierarchy, and compute/bandwidth calculations."
 author: "SeanWang"
-featured: true
+featured: false
 draft: false
 tags:
   - cuda

@@ -3,7 +3,7 @@ title: "Welcome to Fenriar Tech"
 pubDatetime: 2026-08-28T00:00:00+08:00
 description: "Welcome to Fenriar Tech — a dedicated technical blog covering LLM internals, CUDA optimization, deep learning engineering, and algorithms."
 author: "SeanWang"
-featured: true
+featured: false
 draft: false
 tags:
   - general
